@@ -9,6 +9,7 @@ import {
 } from "@/lib/firebaseService";
 import { uploadToCloudinary } from "@/lib/cloudinaryService";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import type { Lesson, Resource } from "@/types";
 
 const TOPICS = [
@@ -90,7 +91,7 @@ const CourseForm = () => {
       const result = await uploadToCloudinary(file, "slides");
       setter(result.secure_url);
     } catch {
-      alert("Upload failed");
+      toast.error("Upload failed");
     } finally {
       setUploading(false);
     }
@@ -167,7 +168,7 @@ const CourseForm = () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
       navigate("/admin/courses");
     } catch {
-      alert("Failed to save course");
+      toast.error("Failed to save course");
     } finally {
       setLoading(false);
     }

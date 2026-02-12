@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { Code2, Github, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 export function Footer() {
   const { t } = useLanguage();
+  const { data: settings } = useSiteSettings();
 
   return (
     <footer className="border-t-[3px] border-foreground bg-card mt-16">
@@ -33,12 +35,16 @@ export function Footer() {
           <div>
             <h3 className="font-bold mb-3">{t("footer.social")}</h3>
             <div className="flex gap-3">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="brutal-btn !px-3 !py-2 bg-card text-foreground">
-                <Github className="h-5 w-5" />
-              </a>
-              <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="brutal-btn !px-3 !py-2 bg-card text-foreground">
-                <MessageCircle className="h-5 w-5" />
-              </a>
+              {settings?.github && (
+                <a href={settings.github} target="_blank" rel="noopener noreferrer" className="brutal-btn !px-3 !py-2 bg-card text-foreground">
+                  <Github className="h-5 w-5" />
+                </a>
+              )}
+              {settings?.discord && (
+                <a href={settings.discord} target="_blank" rel="noopener noreferrer" className="brutal-btn !px-3 !py-2 bg-card text-foreground">
+                  <MessageCircle className="h-5 w-5" />
+                </a>
+              )}
             </div>
           </div>
         </div>

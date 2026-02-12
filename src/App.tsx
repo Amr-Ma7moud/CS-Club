@@ -21,6 +21,7 @@ import CourseList from "./pages/admin/CourseList";
 import CourseForm from "./pages/admin/CourseForm";
 import TeamList from "./pages/admin/TeamList";
 import TeamForm from "./pages/admin/TeamForm";
+import SettingsPage from "./pages/admin/Settings";
 
 const queryClient = new QueryClient();
 
@@ -113,6 +114,14 @@ const App = () => (
                   element={
                     <ProtectedRoute>
                       <TeamForm />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/settings"
+                  element={
+                    <ProtectedRoute>
+                      <SettingsPage />
                     </ProtectedRoute>
                   }
                 />

@@ -9,6 +9,7 @@ import {
 } from "@/lib/firebaseService";
 import { uploadToCloudinary } from "@/lib/cloudinaryService";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const TeamForm = () => {
   const { id } = useParams();
@@ -51,7 +52,7 @@ const TeamForm = () => {
       const result = await uploadToCloudinary(file, "team");
       setImage(result.secure_url);
     } catch {
-      alert("Upload failed");
+      toast.error("Upload failed");
     } finally {
       setUploading(false);
     }
@@ -78,7 +79,7 @@ const TeamForm = () => {
       queryClient.invalidateQueries({ queryKey: ["teamMembers"] });
       navigate("/admin/team");
     } catch {
-      alert("Failed to save team member");
+      toast.error("Failed to save team member");
     } finally {
       setLoading(false);
     }

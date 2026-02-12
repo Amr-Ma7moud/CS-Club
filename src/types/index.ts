@@ -34,3 +34,11 @@ export interface TeamMember {
   github?: string;
   linkedin?: string;
 }
+
+export interface SiteSettings {
+  email: string;
+  github: string;
+  discord: string;
+  linkedin: string;
+  twitter: string;
+}

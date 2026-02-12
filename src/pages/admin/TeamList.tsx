@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Plus, Pencil, Trash2, Users } from "lucide-react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { useTeamMembers } from "@/hooks/useTeamMembers";
+import { toast } from "sonner";
 import { deleteTeamMember } from "@/lib/firebaseService";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -19,7 +20,7 @@ const TeamList = () => {
       await deleteTeamMember(id);
       queryClient.invalidateQueries({ queryKey: ["teamMembers"] });
     } catch {
-      alert("Failed to delete team member");
+      toast.error("Failed to delete team member");
     } finally {
       setDeleting(null);
     }

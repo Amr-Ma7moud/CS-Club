@@ -6,12 +6,13 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  setDoc,
   query,
   where,
   orderBy,
 } from "firebase/firestore";
 import { db } from "./firebase";
-import type { Course, TeamMember } from "@/types";
+import type { Course, TeamMember, SiteSettings } from "@/types";
 
 // ─── Courses ──────────────────────────────────────────────
 
@@ -91,4 +92,26 @@ export async function deleteTeamMember(id: string): Promise<void> {
   await deleteDoc(doc(db, "teamMembers", id));
 }
 
+// ─── Site Settings ────────────────────────────────────────
 
+const SETTINGS_DOC = doc(db, "siteSettings", "main");
+
+const defaultSettings: SiteSettings = {
+  email: "",
+  github: "",
+  discord: "",
+  linkedin: "",
+  twitter: "",
+};
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const d = await getDoc(SETTINGS_DOC);
+  if (!d.exists()) return defaultSettings;
+  return { ...defaultSettings, ...d.data() } as SiteSettings;
+}
+
+export async function updateSiteSettings(
+  data: Partial<SiteSettings>
+): Promise<void> {
+  await setDoc(SETTINGS_DOC, data, { merge: true });
+}

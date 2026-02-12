@@ -5,14 +5,12 @@ import { CourseCard } from "@/components/courses/CourseCard";
 import { SearchInput } from "@/components/shared/SearchInput";
 import { useCourses } from "@/hooks/useCourses";
 
-const years = [2024, 2025];
-const topics = ["Version Control", "Linux", "Build Systems", "Open Source"] as const;
-
 const topicAr: Record<string, string> = {
   "Version Control": "التحكم بالإصدارات",
   Linux: "لينكس",
   "Build Systems": "أنظمة البناء",
   "Open Source": "مصادر مفتوحة",
+  Other: "أخرى",
 };
 
 const Courses = () => {
@@ -21,6 +19,17 @@ const Courses = () => {
   const [search, setSearch] = useState("");
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+
+  // Derive filter options from actual data
+  const years = useMemo(
+    () => [...new Set(courses.map((c) => c.year))].sort((a, b) => b - a),
+    [courses]
+  );
+
+  const topics = useMemo(
+    () => [...new Set(courses.map((c) => c.topic))].sort(),
+    [courses]
+  );
 
   const filtered = useMemo(() => {
     return courses.filter((c) => {
@@ -32,7 +41,7 @@ const Courses = () => {
       const matchTopic = !selectedTopic || c.topic === selectedTopic;
       return matchSearch && matchYear && matchTopic;
     });
-  }, [search, selectedYear, selectedTopic]);
+  }, [courses, search, selectedYear, selectedTopic]);
 
   const hasFilters = search || selectedYear || selectedTopic;
 
@@ -49,38 +58,46 @@ const Courses = () => {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          <SearchInput value={search} onChange={setSearch} />
-          <div className="flex flex-wrap gap-2">
-            {/* Year filters */}
-            {years.map((year) => (
-              <button
-                key={year}
-                onClick={() => setSelectedYear(selectedYear === year ? null : year)}
-                className={`brutal-btn !px-3 !py-1.5 text-xs ${
-                  selectedYear === year
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-card text-foreground"
-                }`}
-              >
-                {year}
-              </button>
-            ))}
-            {/* Topic filters */}
-            {topics.map((topic) => (
-              <button
-                key={topic}
-                onClick={() => setSelectedTopic(selectedTopic === topic ? null : topic)}
-                className={`brutal-btn !px-3 !py-1.5 text-xs ${
-                  selectedTopic === topic
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-card text-foreground"
-                }`}
-              >
-                {language === "ar" ? topicAr[topic] : topic}
-              </button>
-            ))}
+        <div className="flex flex-col sm:flex-row gap-3 mb-8">
+          <div className="flex-1">
+            <SearchInput value={search} onChange={setSearch} />
           </div>
+          {years.length > 0 && (
+            <select
+              value={selectedYear ?? ""}
+              onChange={(e) =>
+                setSelectedYear(e.target.value ? Number(e.target.value) : null)
+              }
+              className="px-4 py-2.5 rounded-lg border-[3px] border-foreground bg-background text-foreground font-bold text-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22currentColor%22%3E%3Cpath%20d%3D%22M4%206l4%204%204-4%22%20stroke%3D%22%23333%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_0.75rem_center] pr-8"
+            >
+              <option value="">
+                {language === "ar" ? "كل السنوات" : "All Years"}
+              </option>
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          )}
+          {topics.length > 0 && (
+            <select
+              value={selectedTopic ?? ""}
+              onChange={(e) =>
+                setSelectedTopic(e.target.value || null)
+              }
+              className="px-4 py-2.5 rounded-lg border-[3px] border-foreground bg-background text-foreground font-bold text-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22currentColor%22%3E%3Cpath%20d%3D%22M4%206l4%204%204-4%22%20stroke%3D%22%23333%22%20stroke-width%3D%222%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_0.75rem_center] pr-8"
+            >
+              <option value="">
+                {language === "ar" ? "كل المواضيع" : "All Topics"}
+              </option>
+              {topics.map((topic) => (
+                <option key={topic} value={topic}>
+                  {language === "ar" ? topicAr[topic] || topic : topic}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
 
         {/* Active filters */}
@@ -100,7 +117,7 @@ const Courses = () => {
             )}
             {selectedTopic && (
               <span className="inline-flex items-center gap-1 rounded-lg border-2 border-foreground bg-muted px-3 py-1 text-xs font-bold">
-                {language === "ar" ? topicAr[selectedTopic] : selectedTopic}
+                {language === "ar" ? topicAr[selectedTopic] || selectedTopic : selectedTopic}
                 <button onClick={() => setSelectedTopic(null)}><X className="h-3 w-3" /></button>
               </span>
             )}

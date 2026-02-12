@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Plus, Pencil, Trash2, FileText } from "lucide-react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { useCourses } from "@/hooks/useCourses";
+import { toast } from "sonner";
 import { deleteCourse } from "@/lib/firebaseService";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -18,7 +19,7 @@ const CourseList = () => {
       await deleteCourse(id);
       queryClient.invalidateQueries({ queryKey: ["courses"] });
     } catch (err) {
-      alert("Failed to delete course");
+      toast.error("Failed to delete course");
     } finally {
       setDeleting(null);
     }

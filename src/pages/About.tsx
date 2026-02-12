@@ -81,8 +81,16 @@ const About = () => {
                 viewport={{ once: true }}
                 variants={fadeUp}
               >
-                <div className="w-16 h-16 rounded-full border-[3px] border-foreground bg-primary text-primary-foreground flex items-center justify-center mx-auto mb-3 text-xl font-bold">
-                  {member.name.split(" ").map((n) => n[0]).join("")}
+                <div className="w-16 h-16 rounded-full border-[3px] border-foreground bg-primary text-primary-foreground flex items-center justify-center mx-auto mb-3 text-xl font-bold overflow-hidden">
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    member.name.split(" ").map((n) => n[0]).join("")
+                  )}
                 </div>
                 <h3 className="font-bold">{member.name}</h3>
                 <p className="text-sm text-muted-foreground mb-3">{member.role}</p>

@@ -1,5 +1,6 @@
 import { MessageCircle, Github, Mail, Linkedin, Twitter } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 import {
   Accordion,
   AccordionContent,
@@ -9,6 +10,7 @@ import {
 
 const Contact = () => {
   const { t } = useLanguage();
+  const { data: settings, isLoading } = useSiteSettings();
 
   const contacts = [
     {
@@ -16,24 +18,27 @@ const Contact = () => {
       title: "Discord",
       desc: t("contact.discord"),
       btn: t("contact.discord.btn"),
-      url: "https://discord.com",
+      url: settings?.discord || "#",
       color: "bg-[hsl(235,86%,65%)]",
+      show: !!settings?.discord,
     },
     {
       icon: Github,
       title: "GitHub",
       desc: t("contact.github"),
       btn: t("contact.github.btn"),
-      url: "https://github.com",
+      url: settings?.github || "#",
       color: "bg-foreground text-background",
+      show: !!settings?.github,
     },
     {
       icon: Mail,
       title: "Email",
       desc: t("contact.email"),
-      btn: "csclub@university.edu",
-      url: "mailto:csclub@university.edu",
+      btn: settings?.email || "Email",
+      url: settings?.email ? `mailto:${settings.email}` : "#",
       color: "bg-primary",
+      show: !!settings?.email,
     },
   ];
 
@@ -52,11 +57,28 @@ const Contact = () => {
   ];
 
   const socials = [
-    { icon: Github, url: "https://github.com", label: "GitHub" },
-    { icon: MessageCircle, url: "https://discord.com", label: "Discord" },
-    { icon: Linkedin, url: "https://linkedin.com", label: "LinkedIn" },
-    { icon: Twitter, url: "https://twitter.com", label: "Twitter" },
-  ];
+    { icon: Github, url: settings?.github, label: "GitHub" },
+    { icon: MessageCircle, url: settings?.discord, label: "Discord" },
+    { icon: Linkedin, url: settings?.linkedin, label: "LinkedIn" },
+    { icon: Twitter, url: settings?.twitter, label: "Twitter" },
+  ].filter((s) => !!s.url);
+
+  if (isLoading) {
+    return (
+      <main className="py-12 px-4">
+        <div className="container mx-auto max-w-5xl">
+          <div className="animate-pulse space-y-8">
+            <div className="h-12 bg-muted rounded w-1/3 mx-auto" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-48 bg-muted rounded" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="py-12 px-4">
@@ -69,7 +91,7 @@ const Contact = () => {
 
         {/* Contact Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {contacts.map((c, i) => (
+          {contacts.filter((c) => c.show).map((c, i) => (
             <div key={i} className="brutal-card p-6 text-center">
               <div className={`w-14 h-14 rounded-xl border-[3px] border-foreground ${c.color} text-primary-foreground flex items-center justify-center mx-auto mb-4`}>
                 <c.icon className="h-7 w-7" />
@@ -102,35 +124,39 @@ const Contact = () => {
                 </div>
               ))}
             </div>
-            <a
-              href="https://discord.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="brutal-btn bg-primary text-primary-foreground mt-8 inline-block"
-            >
-              {t("contact.discord.btn")}
-            </a>
+            {settings?.discord && (
+              <a
+                href={settings.discord}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brutal-btn bg-primary text-primary-foreground mt-8 inline-block"
+              >
+                {t("contact.discord.btn")}
+              </a>
+            )}
           </div>
         </section>
 
         {/* Social Links */}
-        <section className="mb-16 text-center">
-          <h2 className="text-2xl font-bold mb-6">{t("contact.social.title")}</h2>
-          <div className="flex justify-center gap-4 flex-wrap">
-            {socials.map((s, i) => (
-              <a
-                key={i}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="brutal-btn bg-card text-foreground !px-6 !py-4 flex flex-col items-center gap-2"
-              >
-                <s.icon className="h-8 w-8" />
-                <span className="text-xs font-bold">{s.label}</span>
-              </a>
-            ))}
-          </div>
-        </section>
+        {socials.length > 0 && (
+          <section className="mb-16 text-center">
+            <h2 className="text-2xl font-bold mb-6">{t("contact.social.title")}</h2>
+            <div className="flex justify-center gap-4 flex-wrap">
+              {socials.map((s, i) => (
+                <a
+                  key={i}
+                  href={s.url!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="brutal-btn bg-card text-foreground !px-6 !py-4 flex flex-col items-center gap-2"
+                >
+                  <s.icon className="h-8 w-8" />
+                  <span className="text-xs font-bold">{s.label}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* FAQ */}
         <section>

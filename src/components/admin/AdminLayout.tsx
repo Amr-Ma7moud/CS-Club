@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, BookOpen, Users, LogOut, Menu, X, ChevronLeft } from "lucide-react";
+import { LayoutDashboard, BookOpen, Users, Settings, LogOut, Menu, X, ChevronLeft } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
 
@@ -7,6 +7,7 @@ const navItems = [
   { to: "/admin", icon: LayoutDashboard, label: "Dashboard" },
   { to: "/admin/courses", icon: BookOpen, label: "Courses" },
   { to: "/admin/team", icon: Users, label: "Team" },
+  { to: "/admin/settings", icon: Settings, label: "Settings" },
 ];
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
