@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { BookOpen, Wrench, Globe, Users, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { teamMembers } from "@/lib/data";
+import { useTeamMembers } from "@/hooks/useTeamMembers";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -15,6 +15,7 @@ const fadeUp = {
 
 const About = () => {
   const { t } = useLanguage();
+  const { data: teamMembers = [], isLoading } = useTeamMembers();
 
   const offerings = [
     { icon: BookOpen, title: t("about.offer.courses"), desc: t("about.offer.courses.desc") },
@@ -66,7 +67,11 @@ const About = () => {
         <section className="mb-16">
           <h2 className="text-2xl font-bold mb-8 text-center">{t("about.team.title")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {teamMembers.map((member, i) => (
+            {isLoading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="brutal-card p-6 h-44 animate-pulse bg-muted" />
+                ))
+              : teamMembers.map((member, i) => (
               <motion.div
                 key={i}
                 className="brutal-card p-6 text-center"

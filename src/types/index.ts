@@ -26,8 +26,10 @@ export interface Resource {
 }
 
 export interface TeamMember {
+  id: string;
   name: string;
   role: string;
+  order: number;
   image?: string;
   github?: string;
   linkedin?: string;

@@ -3,7 +3,7 @@ import { SearchIcon, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CourseCard } from "@/components/courses/CourseCard";
 import { SearchInput } from "@/components/shared/SearchInput";
-import { courses } from "@/lib/data";
+import { useCourses } from "@/hooks/useCourses";
 
 const years = [2024, 2025];
 const topics = ["Version Control", "Linux", "Build Systems", "Open Source"] as const;
@@ -17,6 +17,7 @@ const topicAr: Record<string, string> = {
 
 const Courses = () => {
   const { t, language } = useLanguage();
+  const { data: courses = [], isLoading } = useCourses();
   const [search, setSearch] = useState("");
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
@@ -117,7 +118,13 @@ const Courses = () => {
         )}
 
         {/* Course grid */}
-        {filtered.length > 0 ? (
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="brutal-card p-6 h-48 animate-pulse bg-muted" />
+            ))}
+          </div>
+        ) : filtered.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((course) => (
               <CourseCard key={course.id} course={course} />

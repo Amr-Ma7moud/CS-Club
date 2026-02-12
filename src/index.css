@@ -1,156 +1,160 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-
 @layer base {
-  :root {
-    --background: 50 33% 96%;
-    --foreground: 220 20% 10%;
+    :root {
+        --background: 50 33% 96%;
+        --foreground: 220 20% 10%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+        --card: 0 0% 100%;
+        --card-foreground: 220 20% 10%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 220 20% 10%;
 
-    --primary: 220 90% 56%;
-    --primary-foreground: 0 0% 100%;
+        --primary: 220 90% 56%;
+        --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 93% 58%;
-    --secondary-foreground: 220 20% 10%;
+        --secondary: 45 93% 58%;
+        --secondary-foreground: 220 20% 10%;
 
-    --muted: 220 14% 90%;
-    --muted-foreground: 220 10% 40%;
+        --muted: 220 14% 90%;
+        --muted-foreground: 220 10% 40%;
 
-    --accent: 340 82% 60%;
-    --accent-foreground: 0 0% 100%;
+        --accent: 340 82% 60%;
+        --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 10%;
-    --input: 220 20% 10%;
-    --ring: 220 90% 56%;
+        --border: 220 20% 10%;
+        --input: 220 20% 10%;
+        --ring: 220 90% 56%;
 
-    --radius: 0.5rem;
+        --radius: 0.5rem;
 
-    /* Neo Brutalism tokens */
-    --brutal-border: 3px;
-    --brutal-shadow: 4px 4px 0px hsl(220 20% 10%);
-    --brutal-shadow-lg: 6px 6px 0px hsl(220 20% 10%);
-    --brutal-shadow-hover: 6px 6px 0px hsl(220 20% 10%);
-    --brutal-radius: 0.75rem;
+        /* Neo Brutalism tokens */
+        --brutal-border: 3px;
+        --brutal-shadow: 4px 4px 0px hsl(220 20% 10%);
+        --brutal-shadow-lg: 6px 6px 0px hsl(220 20% 10%);
+        --brutal-shadow-hover: 6px 6px 0px hsl(220 20% 10%);
+        --brutal-radius: 0.75rem;
 
-    /* Topic colors */
-    --topic-git: 142 71% 45%;
-    --topic-linux: 25 95% 53%;
-    --topic-build: 270 70% 55%;
-    --topic-opensource: 220 90% 56%;
-    --topic-other: 220 10% 50%;
+        /* Topic colors */
+        --topic-git: 142 71% 45%;
+        --topic-linux: 25 95% 53%;
+        --topic-build: 270 70% 55%;
+        --topic-opensource: 220 90% 56%;
+        --topic-other: 220 10% 50%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+        --sidebar-background: 0 0% 98%;
+        --sidebar-foreground: 240 5.3% 26.1%;
+        --sidebar-primary: 240 5.9% 10%;
+        --sidebar-primary-foreground: 0 0% 98%;
+        --sidebar-accent: 240 4.8% 95.9%;
+        --sidebar-accent-foreground: 240 5.9% 10%;
+        --sidebar-border: 220 13% 91%;
+        --sidebar-ring: 217.2 91.2% 59.8%;
+    }
 
-  .dark {
-    --background: 220 20% 8%;
-    --foreground: 50 20% 95%;
+    .dark {
+        --background: 220 20% 8%;
+        --foreground: 50 20% 95%;
 
-    --card: 220 20% 12%;
-    --card-foreground: 50 20% 95%;
+        --card: 220 20% 12%;
+        --card-foreground: 50 20% 95%;
 
-    --popover: 220 20% 12%;
-    --popover-foreground: 50 20% 95%;
+        --popover: 220 20% 12%;
+        --popover-foreground: 50 20% 95%;
 
-    --primary: 220 90% 60%;
-    --primary-foreground: 0 0% 100%;
+        --primary: 220 90% 60%;
+        --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 93% 58%;
-    --secondary-foreground: 220 20% 10%;
+        --secondary: 45 93% 58%;
+        --secondary-foreground: 220 20% 10%;
 
-    --muted: 220 15% 20%;
-    --muted-foreground: 220 10% 60%;
+        --muted: 220 15% 20%;
+        --muted-foreground: 220 10% 60%;
 
-    --accent: 340 82% 60%;
-    --accent-foreground: 0 0% 100%;
+        --accent: 340 82% 60%;
+        --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 100%;
+        --destructive: 0 62% 30%;
+        --destructive-foreground: 0 0% 100%;
 
-    --border: 50 20% 85%;
-    --input: 220 15% 25%;
-    --ring: 220 90% 60%;
+        --border: 50 20% 85%;
+        --input: 220 15% 25%;
+        --ring: 220 90% 60%;
 
-    --brutal-shadow: 4px 4px 0px hsl(50 20% 85%);
-    --brutal-shadow-lg: 6px 6px 0px hsl(50 20% 85%);
-    --brutal-shadow-hover: 6px 6px 0px hsl(50 20% 85%);
+        --brutal-shadow: 4px 4px 0px hsl(50 20% 85%);
+        --brutal-shadow-lg: 6px 6px 0px hsl(50 20% 85%);
+        --brutal-shadow-hover: 6px 6px 0px hsl(50 20% 85%);
 
-    --topic-git: 142 71% 55%;
-    --topic-linux: 25 95% 63%;
-    --topic-build: 270 70% 65%;
-    --topic-opensource: 220 90% 65%;
-    --topic-other: 220 10% 60%;
+        --topic-git: 142 71% 55%;
+        --topic-linux: 25 95% 63%;
+        --topic-build: 270 70% 65%;
+        --topic-opensource: 220 90% 65%;
+        --topic-other: 220 10% 60%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+        --sidebar-background: 240 5.9% 10%;
+        --sidebar-foreground: 240 4.8% 95.9%;
+        --sidebar-primary: 224.3 76.3% 48%;
+        --sidebar-primary-foreground: 0 0% 100%;
+        --sidebar-accent: 240 3.7% 15.9%;
+        --sidebar-accent-foreground: 240 4.8% 95.9%;
+        --sidebar-border: 240 3.7% 15.9%;
+        --sidebar-ring: 217.2 91.2% 59.8%;
+    }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+    * {
+        @apply border-border;
+    }
 
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Space Grotesk', sans-serif;
-  }
+    body {
+        @apply bg-background text-foreground;
+        font-family: "Space Grotesk", sans-serif;
+    }
 
-  code, pre {
-    font-family: 'JetBrains Mono', monospace;
-  }
+    code,
+    pre {
+        font-family: "JetBrains Mono", monospace;
+    }
 }
 
 /* Neo Brutalism utility classes */
 @layer components {
-  .brutal-card {
-    @apply border-[3px] border-foreground bg-card rounded-xl;
-    box-shadow: var(--brutal-shadow);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
+    .brutal-card {
+        @apply border-[3px] border-foreground bg-card rounded-xl;
+        box-shadow: var(--brutal-shadow);
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
 
-  .brutal-card:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--brutal-shadow-hover);
-  }
+    .brutal-card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: var(--brutal-shadow-hover);
+    }
 
-  .brutal-btn {
-    @apply border-[3px] border-foreground font-bold rounded-xl px-6 py-3;
-    box-shadow: var(--brutal-shadow);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
+    .brutal-btn {
+        @apply border-[3px] border-foreground font-bold rounded-xl px-6 py-3;
+        box-shadow: var(--brutal-shadow);
+        transition:
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
+    }
 
-  .brutal-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--brutal-shadow-hover);
-  }
+    .brutal-btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: var(--brutal-shadow-hover);
+    }
 
-  .brutal-btn:active {
-    transform: translate(2px, 2px);
-    box-shadow: none;
-  }
+    .brutal-btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: none;
+    }
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { User, BookOpen, Calendar, Share2, ExternalLink, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getCourseBySlug } from "@/lib/data";
+import { useCourseBySlug } from "@/hooks/useCourses";
 import { TopicBadge } from "@/components/shared/TopicBadge";
 import { YearBadge } from "@/components/shared/YearBadge";
 import { SlideViewer } from "@/components/courses/SlideViewer";
@@ -16,9 +16,24 @@ import {
 const CourseDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useLanguage();
-  const course = getCourseBySlug(slug || "");
+  const { data: course, isLoading } = useCourseBySlug(slug);
   const [activeLesson, setActiveLesson] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  if (isLoading) {
+    return (
+      <main className="py-20 px-4">
+        <div className="container mx-auto max-w-5xl">
+          <div className="animate-pulse space-y-6">
+            <div className="h-6 bg-muted rounded w-1/3" />
+            <div className="h-10 bg-muted rounded w-2/3" />
+            <div className="h-4 bg-muted rounded w-1/4" />
+            <div className="h-24 bg-muted rounded" />
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   if (!course) {
     return (
